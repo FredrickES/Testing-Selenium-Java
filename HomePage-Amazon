@@ -1,0 +1,100 @@
+package TestingAmazon;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class HomePage {
+
+	
+	WebDriver driver;
+	
+	public void invokeBrowser(){
+		
+		try {
+			System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium WebDriver\\ChromeDriver\\chromedriver-win32\\chromedriver.exe");
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().deleteAllCookies();
+			//driver.manage().timeouts().implicitlyWait(null);
+			//driver.manage().timeouts().pageLoadTimeout(null);
+			getCommandsAmazon();
+			//closeBrowser();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeBrowser() {
+		driver.quit();
+	}
+	
+	public void getCommandsAmazon() {
+		
+		try {
+			driver.get("https://www.amazon.com/");
+			Thread.sleep(3000);
+			String titlePage = driver.getTitle();
+			System.out.println("Title of the page is: " + titlePage);
+			
+			
+			WebElement ContinueShopping = driver.findElement(By.className("a-button-text"));
+			if (ContinueShopping.isDisplayed()) {
+				ContinueShopping.click();
+				Thread.sleep(3000);
+				System.out.println("Tombol Continue Shopping muncul dan berhasil diklik!!");
+			} else {
+				System.out.println("Tombol Tidak Muncul!!");
+
+			}
+			
+			WebElement deliveryAddress = driver.findElement(By.className("a-button-input"));
+			if (deliveryAddress.isDisplayed()) {
+				deliveryAddress.click();
+				Thread.sleep(3000);
+				System.out.println("Tombol Delivery Address muncul dan berhasil Dismiss!!");
+			} else {
+				System.out.println("Tombol Tidak Muncul!!");
+
+			}
+			
+			
+			WebElement SearchName = driver.findElement(By.id("twotabsearchtextbox"));
+			SearchName.sendKeys("Aibi Pocket Pet");
+			Thread.sleep(3000);
+			
+			WebElement SearchButton = driver.findElement(By.id("nav-search-submit-button"));
+			SearchButton.click();
+			Thread.sleep(3000);
+			
+			
+			
+			
+			
+			/*
+			 * WebElement todayDeals = driver.findElement(By.linkText("Today's Deals"));
+			 * todayDeals.click(); Thread.sleep(3000);
+			 * 
+			 * String currentPage = driver.getCurrentUrl();
+			 * System.out.println("The Current link page is : " + currentPage);
+			 * Thread.sleep(3000);
+			 */
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		HomePage object1 = new HomePage();
+		object1.invokeBrowser();
+		
+		
+	}
+
+}
