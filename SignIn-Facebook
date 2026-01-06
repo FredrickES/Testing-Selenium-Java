@@ -1,0 +1,103 @@
+package Testing;
+
+import java.awt.SecondaryLoop;
+import java.time.Month;
+import java.time.MonthDay;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class Seleniumscript {
+
+	public static void main(String[] args) {
+
+		
+System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium WebDriver\\ChromeDriver\\chromedriver-win32\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();	
+driver.manage().deleteAllCookies();
+System.out.println("Berhasil Hapus Semua Kukis");
+
+try {
+	driver.get("https://www.facebook.com/r.php?entry_point=login");
+	driver.manage().window().maximize();
+	driver.manage().timeouts();
+	Thread.sleep(3000);
+
+	WebElement firstName = driver.findElement(By.name("firstname"));
+	firstName.sendKeys("Fredrick");
+	Thread.sleep(3000);
+	
+	WebElement lastName = driver.findElement(By.name("lastname"));
+	lastName.sendKeys("Effendy Salim");
+	Thread.sleep(3000);
+	
+	WebElement birthDay = driver.findElement(By.name("birthday_day"));
+	Select day = new Select(birthDay);
+	day.selectByValue("25");
+	Thread.sleep(3000);
+	
+	WebElement birthMonth = driver.findElement(By.name("birthday_month"));
+	Select month = new Select(birthMonth);
+	month.selectByVisibleText("Nov");
+	Thread.sleep(3000);
+	
+	WebElement birthYear = driver.findElement(By.name("birthday_year"));
+	Select year = new Select(birthYear);
+	year.selectByValue("2000");
+	Thread.sleep(3000);
+	
+	WebElement genderSex = driver.findElement(By.cssSelector("input[type='radio'][name='sex'][value='2']"));
+	genderSex.click();
+	Thread.sleep(3000);
+	
+	WebElement email = driver.findElement(By.name("reg_email__"));
+	email.sendKeys("fredrick.salim@mii.co.id");
+	Thread.sleep(3000);
+	
+	WebElement password = driver.findElement(By.name("reg_passwd__"));
+	password.sendKeys("NayeonXubs");
+	Thread.sleep(3000);
+	
+	WebElement signUp = driver.findElement(By.name("websubmit"));
+	
+	if (!firstName.getAttribute("value").isEmpty()
+			&& !lastName.getAttribute("value").isEmpty()
+			&& !birthDay.getAttribute("value").isEmpty()
+			&& !birthMonth.getAttribute("value").isEmpty()
+			&& !birthYear.getAttribute("value").isEmpty()
+			&& !genderSex.getAttribute("value").isEmpty()
+			&& !email.getAttribute("value").isEmpty()
+			&& !password.getAttribute("value").isEmpty()) {
+		signUp.click();
+		Thread.sleep(3000);
+		System.out.println("Registration berhasil!!");
+	} else {
+//		firstName.sendKeys("Fredrick");
+//		Thread.sleep(3000);
+		signUp.click();
+		Thread.sleep(3000);
+		System.out.println("Registration gagal!!");
+
+	}
+	Thread.sleep(3000);
+	
+	System.out.println("Gender dengan value = 2 berhasil dipilih!");
+
+	String pageTitle = driver.getTitle();
+	System.out.println("Judul Halaman: "+ pageTitle);
+
+	System.out.println("Testing Berhasil Dilakukan!!");
+	driver.quit();
+	
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+	}
+
+}
